@@ -10,9 +10,6 @@ import study.datajpa.entity.Member;
 
 import java.util.Optional;
 
-import static org.assertj.core.api.FactoryBasedNavigableListAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-
 
 @SpringBootTest
 @Transactional
