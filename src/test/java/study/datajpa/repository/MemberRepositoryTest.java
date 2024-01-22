@@ -11,16 +11,19 @@ import study.datajpa.entity.Member;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 
 @SpringBootTest
 @Transactional
 @Rollback(false)
 class MemberRepositoryTest {
 
-    @Autowired MemberRepository memberRepository;
+    @Autowired
+    MemberRepository memberRepository;
 
     @Test
-    public void testMember(){
+    public void testMember() {
 
         Member member = new Member("memberA");
         Member savedMember = memberRepository.save(member);
@@ -34,7 +37,7 @@ class MemberRepositoryTest {
     }
 
     @Test
-    public void basicCRUD(){
+    public void basicCRUD() {
         Member member1 = new Member("member1");
         Member member2 = new Member("member2");
 
@@ -63,5 +66,23 @@ class MemberRepositoryTest {
         Assertions.assertThat(deletedCount).isEqualTo(0);
 
     }
+
+    @Test
+    public void findByUsernameAndAgeGreaterThen() {
+        Member m1 = new Member("AAA", 10);
+        Member m2 = new Member("AAA", 20);
+
+        memberRepository.save(m1);
+        memberRepository.save(m2);
+        List<Member> result = memberRepository.findByUsernameAndAgeGreaterThan("AAA", 15);
+
+        Assertions.assertThat(result.get(0).getUsername()).isEqualTo("AAA");
+        Assertions.assertThat(result.get(0).getAge()).isEqualTo(20);
+        Assertions.assertThat(result.size()).isEqualTo(1);
+
+
+
+    }
+
 
 }
